@@ -10,19 +10,19 @@
     </div>
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div class="md:w-2/3">
-            <span class="inline-block py-1 px-3 rounded-full bg-primary/20 text-primary border border-primary/30 text-sm font-semibold mb-6 uppercase tracking-wider">Premium Taste</span>
-            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                Satisfy your <span class="text-primary">cravings</span> with every bite
+        <div class="md:w-2/3" data-aos="fade-up" data-aos-delay="100">
+            <span class="inline-block py-1.5 px-4 rounded-full bg-primary/20 text-primary border border-primary/30 text-sm font-bold mb-6 uppercase tracking-wider backdrop-blur-sm">Premium Taste</span>
+            <h1 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight drop-shadow-lg">
+                Satisfy your <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-400">cravings</span> with every bite
             </h1>
-            <p class="text-xl text-gray-300 mb-10 md:w-4/5">
+            <p class="text-xl text-gray-200 mb-10 md:w-4/5 font-light" data-aos="fade-up" data-aos-delay="300">
                 Experience the best premium food in town. Freshly prepared, passionately cooked, and delivered hot.
             </p>
-            <div class="flex space-x-4">
-                <a href="{{ route('menu.index') }}" class="px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:bg-red-600 shadow-lg shadow-red-500/40 transition-all hover:-translate-y-1">
+            <div class="flex space-x-4" data-aos="fade-up" data-aos-delay="500">
+                <a href="{{ route('menu.index') }}" class="px-8 py-4 bg-gradient-to-r from-primary to-orange-500 text-white rounded-full font-bold text-lg hover:from-red-600 hover:to-orange-600 shadow-xl shadow-red-500/40 transition-all hover:-translate-y-1 hover:scale-105">
                     Order Now
                 </a>
-                <a href="{{ route('menu.index') }}" class="px-8 py-4 bg-white/10 text-white rounded-full font-bold text-lg hover:bg-white/20 backdrop-blur-sm border border-white/20 transition-all">
+                <a href="{{ route('menu.index') }}" class="px-8 py-4 bg-white/10 text-white rounded-full font-bold text-lg hover:bg-white/20 backdrop-blur-md border border-white/30 transition-all hover:-translate-y-1 hover:scale-105">
                     View Menu
                 </a>
             </div>
@@ -30,19 +30,19 @@
     </div>
 </div>
 
-<!-- Categories Section -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="flex justify-between items-end mb-12">
+<!-- Categories Section (Overlapping) -->
+<div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 pb-20">
+    <div class="flex justify-between items-end mb-10" data-aos="fade-in" data-aos-delay="600">
         <div>
-            <h2 class="text-3xl font-bold text-gray-900 mb-2">Explore Categories</h2>
-            <p class="text-gray-500">Find exactly what you're looking for</p>
+            <h2 class="text-3xl font-bold text-white drop-shadow-md mb-2">Explore Categories</h2>
+            <p class="text-gray-200 drop-shadow-sm">Find exactly what you're looking for</p>
         </div>
-        <a href="{{ route('menu.index') }}" class="text-primary font-semibold hover:underline hidden md:block">See all &rarr;</a>
+        <a href="{{ route('menu.index') }}" class="text-white font-bold bg-white/20 px-4 py-2 rounded-full backdrop-blur-md hover:bg-white/30 transition-all hidden md:block border border-white/20">See all &rarr;</a>
     </div>
     
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        @foreach($categories as $category)
-        <a href="{{ route('menu.index', ['category' => $category->slug]) }}" class="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 aspect-square">
+        @foreach($categories as $index => $category)
+        <a href="{{ route('menu.index', ['category' => $category->slug]) }}" class="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/5] hover:-translate-y-2" data-aos="zoom-in-up" data-aos-delay="{{ 100 * $index }}">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
             @if($category->image)
                 <img src="{{ asset('storage/' . $category->image) }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ $category->name }}">
@@ -58,16 +58,23 @@
 </div>
 
 <!-- Popular Dishes Section -->
-<div class="bg-gray-50 py-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-gray-900 mb-4">Popular Dishes</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto">Our most loved signature dishes that keep our customers coming back for more.</p>
+<div class="bg-gradient-to-b from-gray-50 to-white py-24 relative overflow-hidden">
+    <!-- Decorative background elements -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-24 -left-24 w-96 h-96 bg-yellow-400/5 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <span class="text-primary font-bold tracking-widest uppercase text-sm mb-2 block">Our Favorites</span>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4">Popular Dishes</h2>
+            <p class="text-gray-500 max-w-2xl mx-auto text-lg">Our most loved signature dishes that keep our customers coming back for more.</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            @foreach($popularProducts as $product)
-            <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100">
+            @foreach($popularProducts as $index => $product)
+            <div class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 group border border-gray-100/50 hover:-translate-y-2 flex flex-col" data-aos="fade-up" data-aos-delay="{{ 100 * $index }}">
                 <div class="relative h-56 overflow-hidden">
                     @if($product->image)
                         <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ $product->name }}">
@@ -106,9 +113,10 @@
             @endforeach
         </div>
         
-        <div class="text-center mt-12">
-            <a href="{{ route('menu.index') }}" class="inline-flex items-center px-8 py-4 border-2 border-gray-900 text-lg font-bold rounded-full text-gray-900 hover:bg-gray-900 hover:text-white transition-all">
+        <div class="text-center mt-16" data-aos="zoom-in" data-aos-delay="200">
+            <a href="{{ route('menu.index') }}" class="inline-flex items-center px-10 py-4 bg-gray-900 text-lg font-bold rounded-full text-white hover:bg-primary transition-colors shadow-xl hover:shadow-primary/30 hover:scale-105 duration-300">
                 View Full Menu
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
             </a>
         </div>
     </div>

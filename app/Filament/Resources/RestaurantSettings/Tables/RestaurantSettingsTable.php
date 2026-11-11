@@ -16,18 +16,21 @@ class RestaurantSettingsTable
         return $table
             ->columns([
                 TextColumn::make('key')
+                    ->label('Setting Key')
+                    ->weight('bold')
+                    ->formatStateUsing(fn ($state) => ucwords(str_replace('_', ' ', $state)))
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('value')
+                    ->label('Setting Value')
+                    ->limit(50)
                     ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
+                    ->label('Last Updated')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
+                    ->sortable(),
             ])
             ->recordActions([
                 ViewAction::make(),

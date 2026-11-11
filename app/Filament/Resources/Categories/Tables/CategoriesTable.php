@@ -18,23 +18,34 @@ class CategoriesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->label('Category Name')
+                    ->weight('bold')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('slug')
+                    ->label('Slug')
+                    ->color('gray')
                     ->searchable(),
-                ImageColumn::make('image'),
+
+                TextColumn::make('products_count')
+                    ->counts('products')
+                    ->label('Dishes')
+                    ->badge()
+                    ->color('primary')
+                    ->sortable(),
+
+                ImageColumn::make('image')
+                    ->circular(),
+
                 IconColumn::make('status')
+                    ->label('Active')
                     ->boolean(),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
             ])
             ->recordActions([
                 ViewAction::make(),

@@ -9,6 +9,8 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
 class ProductsTable
@@ -17,40 +19,62 @@ class ProductsTable
     {
         return $table
             ->columns([
-                TextColumn::make('category_id')
-                    ->numeric()
-                    ->sortable(),
+                ImageColumn::make('image')
+                    ->circular()
+                    ->defaultImageUrl('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=100&q=80'),
+
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('slug')
-                    ->searchable(),
-                TextColumn::make('price')
-                    ->money()
+                    ->label('Dish Name')
+                    ->weight('bold')
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('discount_price')
-                    ->money()
-                    ->sortable(),
-                ImageColumn::make('image'),
-                TextColumn::make('sku')
-                    ->label('SKU')
-                    ->searchable(),
-                IconColumn::make('status')
-                    ->boolean(),
-                IconColumn::make('is_featured')
-                    ->boolean(),
-                IconColumn::make('is_popular')
-                    ->boolean(),
-                TextColumn::make('created_at')
-                    ->dateTime()
+
+                TextColumn::make('category.name')
+                    ->label('Category')
+                    ->badge()
+                    ->color('gray')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+                    ->searchable(),
+
+                TextColumn::make('price')
+                    ->label('Price')
+                    ->formatStateUsing(fn ($state) => 'Rs. ' . number_format($state, 0))
+                    ->weight('semibold')
+                    ->sortable(),
+
+                TextColumn::make('discount_price')
+                    ->label('Special Deal')
+                    ->formatStateUsing(fn ($state) => $state ? 'Rs. ' . number_format($state, 0) : '—')
+                    ->color('success')
+                    ->sortable(),
+
+                IconColumn::make('is_popular')
+                    ->label('Popular')
+                    ->boolean(),
+
+                IconColumn::make('is_featured')
+                    ->label('Featured')
+                    ->boolean(),
+
+                IconColumn::make('status')
+                    ->label('Available')
+                    ->boolean(),
+
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('category_id')
+                    ->relationship('category', 'name')
+                    ->label('Category'),
+
+                TernaryFilter::make('is_popular')
+                    ->label('Popular Dishes'),
+
+                TernaryFilter::make('is_featured')
+                    ->label('Featured Items'),
             ])
             ->recordActions([
                 ViewAction::make(),
